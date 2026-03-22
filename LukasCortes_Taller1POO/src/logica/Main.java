@@ -6,8 +6,38 @@ import java.util.Scanner;
 public class Main {
 	public static Scanner sc;
 	public static void main(String[] args) throws FileNotFoundException {
-		leerRegistros();
-		leerUsuarios();
+		leerRegistros(); //Lectura del archivo Registros.txt
+		leerUsuarios();	//Lectura del archivo Usuarios.txt
+		
+		int opcion = 0; 
+		sc = new Scanner(System.in);
+		do {
+			System.out.println("1) Menu de Usuarios");
+			System.out.println("2) Menu de Analisis");
+			System.out.println("3) Salir");
+			opcion = sc.nextInt();
+			switch (opcion) {
+			case 1:
+				menuUsuarios();
+				break;
+			case 2:
+				menuAnalisis();
+				break;
+			case 3:
+				System.out.println("Cerró el programa con exito...");
+				break;
+			default:
+				System.out.println("Ingresó algo equivocado. Intentelo de nuevo");
+				break;
+			}
+		}while (opcion != 3 || opcion == 2 || opcion == 1);
+	}
+	private static void menuUsuarios() {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void menuAnalisis() {
+		// TODO Auto-generated method stub
 		
 	}
 	private static void leerUsuarios() throws FileNotFoundException {

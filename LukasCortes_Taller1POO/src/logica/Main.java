@@ -18,11 +18,20 @@ public class Main {
 			String[] partes = linea.split(";");
 			String ID = partes[0].trim();
 			String contraseña = partes[1].trim();
-			
 		}
 		
 	}
-	public static void leerRegistros(){
-		
+	public static void leerRegistros() throws FileNotFoundException{
+		File arch = new File("Registros.txt");
+		sc = new Scanner(arch);
+		while (sc.hasNextLine()) {
+			String linea = sc.nextLine();
+			String[] partes = linea.split(";");
+			String ID = partes[0].trim();
+			String fecha = partes[1].trim();
+			int horas = Integer.parseInt(partes[2]);
+			sc.nextLine();
+			String actividad = partes[3].trim();
+		}
 	}
 }

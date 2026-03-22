@@ -7,12 +7,13 @@
 ## Estructura del proyecto
 
 ```text
-📂 LukasCortes_Taller1POO/
-├── 📂 datos/
+LukasCortes_Taller1POO/
+├── datos/
 │   ├── Usuarios.txt
 │   └── Registros.txt
 │
-├── 📂 src/
-│   └── Main.java
+├── src/
+|   └── logica/
+│     └── Main.java
 │
 └── README.md

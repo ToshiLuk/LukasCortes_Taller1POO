@@ -31,7 +31,35 @@ public class Main {
 				String contraseña = sc.nextLine();
 				if (inicioSesion(usuario, contraseña) == true) {//Llamamos al metodo que comprueba si existe el perfil ingresado
 					System.out.println("Acceso correcto!");
-					
+					System.out.println("\nBienvenido " + usuarioActivo + "! \n\nQue deseas realizar?");
+					System.out.println("\n1) Registrar actividad.");
+					System.out.println("2) Modificar actividad.");
+					System.out.println("3) Eliminar actividad.");
+					System.out.println("4) Cambiar contraseña.");
+					System.out.println("5) Salir.");
+					opcion = 0; //Reseteamos la variable opcion por cualquier error que pueda haber
+					do {
+						switch (opcion) {
+						case 1:
+							registrarActividad();
+							break;
+						case 2:
+							modificarActividad();
+							break;
+						case 3:
+							eliminarActividad();
+							break;
+						case 4:
+							cambiarContraseña();
+							break;
+						case 5:
+							System.out.println("Salió del menú con exito...");
+							break;
+						default:
+							System.out.println("Ingresó una opcion no valida.");
+							break;
+						}
+					}while(opcion != 5);
 				}else {
 					System.out.println("Acceso incorrecto!");
 				}
@@ -47,7 +75,23 @@ public class Main {
 				System.out.println("Ingresó algo equivocado. Intentelo de nuevo");
 				break;
 			}
-		}while (opcion != 3 || opcion == 2 || opcion == 1);
+		}while (opcion != 3);
+	}
+	private static void registrarActividad() {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void modificarActividad() {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void eliminarActividad() {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void cambiarContraseña() {
+		// TODO Auto-generated method stub
+		
 	}
 	private static boolean inicioSesion(String usuario, String contraseña) {
 		for (int i = 0; i < cantUsuarios; i++) {

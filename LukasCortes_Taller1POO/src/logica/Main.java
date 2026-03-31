@@ -14,10 +14,12 @@ public class Main {
 	static String[] contraseñas = new String[10];
 	static int cantUsuarios = 0;
 	static String usuarioActivo = "";
+	
 	public static void main(String[] args) throws IOException {
 		leerRegistros(); //Lectura del archivo Registros.txt
 		leerUsuarios();	//Lectura del archivo Usuarios.txt
 		int opcion = 0; 
+		
 		sc = new Scanner(System.in); //Se crea un nuevo escaner para poder ingresar por consola
 		do {
 			System.out.println("1) Menu de Usuarios");
@@ -71,6 +73,7 @@ public class Main {
 				}else {
 					System.out.println("Acceso incorrecto!");
 				}
+			
 				break;
 			case 2:
 				menuAnalisis();
@@ -99,9 +102,31 @@ public class Main {
 		bw.write(actividadNueva);
 		bw.close();
 	}
-	private static void modificarActividad() {
-		// TODO Auto-generated method stub
-		
+	private static void modificarActividad() throws FileNotFoundException {
+		 File arch = new File("datos/Registros.txt");
+		    lector = new Scanner(arch);
+		    int indice = 1;
+		    while (lector.hasNextLine()) {
+		        String linea = lector.nextLine();
+		        // Evitar líneas vacías
+		        if (linea.trim().isEmpty()) {
+		            continue;
+		        }
+		        String[] partes = linea.split(";");
+		        if (partes.length < 4) {
+		            continue;
+		        }
+		        String usuario = partes[0].trim();
+		        // Filtro
+		        if (usuario.equals(usuarioActivo)) {
+		            System.out.println(indice + ") " + linea);
+		        }
+		        indice++;
+		    }
+		    System.out.println("~~~ Que desea modificar " + usuarioActivo + " ~~~");
+		    System.out.print("\n Seleccione la actividad a modificar, ingrese su indice: ");
+		    String indiceInput = sc.nextLine();
+		    
 	}
 	private static void eliminarActividad() {
 		// TODO Auto-generated method stub
@@ -139,6 +164,7 @@ public class Main {
 			contraseñas[cantUsuarios] = partes[1];
 			cantUsuarios++;
 		}
+		
 	}
 	public static void leerRegistros() throws FileNotFoundException{
 		File arch = new File("datos/Registros.txt");
@@ -150,7 +176,7 @@ public class Main {
 	        }
 			String[] partes = linea.split(";");
 			if (partes.length < 4) {
-	            continue;
+	            continue; //
 	        }
 			String ID = partes[0].trim();
 			String fecha = partes[1].trim();

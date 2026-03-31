@@ -1,20 +1,23 @@
 package logica;
+import java.io.BufferedWriter;
 //Lukas Paolo Toshisuke Cortés Alfaro, 22.108.123-4, ICCI
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 public class Main {
-	public static Scanner sc;
+	public static Scanner sc; //Para Inputs
+	public static Scanner lector; //Para los txt
 	//Se inician variables para usar luego
 	static String[] usuarios = new String[10];
 	static String[] contraseñas = new String[10];
 	static int cantUsuarios = 0;
 	static String usuarioActivo = "";
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		leerRegistros(); //Lectura del archivo Registros.txt
 		leerUsuarios();	//Lectura del archivo Usuarios.txt
 		int opcion = 0; 
-		
 		sc = new Scanner(System.in); //Se crea un nuevo escaner para poder ingresar por consola
 		do {
 			System.out.println("1) Menu de Usuarios");
@@ -30,27 +33,32 @@ public class Main {
 				System.out.print("Contraseña: ");
 				String contraseña = sc.nextLine();
 				if (inicioSesion(usuario, contraseña) == true) {//Llamamos al metodo que comprueba si existe el perfil ingresado
-					System.out.println("Acceso correcto!");
-					System.out.println("\nBienvenido " + usuarioActivo + "! \n\nQue deseas realizar?");
-					System.out.println("\n1) Registrar actividad.");
-					System.out.println("2) Modificar actividad.");
-					System.out.println("3) Eliminar actividad.");
-					System.out.println("4) Cambiar contraseña.");
-					System.out.println("5) Salir.");
-					opcion = 0; //Reseteamos la variable opcion por cualquier error que pueda haber
 					do {
+						System.out.println("Acceso correcto!");
+						System.out.println("\nBienvenido " + usuarioActivo + "! \n\nQue deseas realizar?");
+						System.out.println("\n1) Registrar actividad.");
+						System.out.println("2) Modificar actividad.");
+						System.out.println("3) Eliminar actividad.");
+						System.out.println("4) Cambiar contraseña.");
+						System.out.println("5) Salir.");
+						opcion = sc.nextInt();
+						sc.nextLine();
 						switch (opcion) {
 						case 1:
 							registrarActividad();
+							opcion = 0;
 							break;
 						case 2:
 							modificarActividad();
+							opcion = 0;
 							break;
 						case 3:
 							eliminarActividad();
+							opcion = 0;
 							break;
 						case 4:
 							cambiarContraseña();
+							opcion = 0;
 							break;
 						case 5:
 							System.out.println("Salió del menú con exito...");
@@ -59,11 +67,10 @@ public class Main {
 							System.out.println("Ingresó una opcion no valida.");
 							break;
 						}
-					}while(opcion != 5);
+					}while(opcion != 5 );
 				}else {
 					System.out.println("Acceso incorrecto!");
 				}
-			
 				break;
 			case 2:
 				menuAnalisis();
@@ -77,9 +84,20 @@ public class Main {
 			}
 		}while (opcion != 3);
 	}
-	private static void registrarActividad() {
-		// TODO Auto-generated method stub
-		
+	private static void registrarActividad() throws IOException {
+		System.out.println("~~~ Registro de actividad de " + usuarioActivo + " ~~~");
+		System.out.print("Ingrese la fecha de la actividad: ");
+		String fecha = sc.nextLine();
+		System.out.print("Ingrese las horas de la actividad: ");
+		int horas = sc.nextInt();
+		sc.nextLine();
+		System.out.print("Ingrese la actividad: ");
+		String actividad = sc.nextLine();
+		String actividadNueva = usuarioActivo + ";" + fecha + ";" + horas + ";" + actividad;
+		BufferedWriter bw = new BufferedWriter(new FileWriter("datos/Registros.txt", true));
+		bw.newLine();
+		bw.write(actividadNueva);
+		bw.close();
 	}
 	private static void modificarActividad() {
 		// TODO Auto-generated method stub
@@ -111,9 +129,9 @@ public class Main {
 	}
 	public static void leerUsuarios() throws FileNotFoundException {
 		File arch = new File("datos/Usuarios.txt");
-		sc = new Scanner(arch);
-		while (sc.hasNextLine()) {
-			String linea = sc.nextLine();
+		lector = new Scanner(arch);
+		while (lector.hasNextLine()) {
+			String linea = lector.nextLine();
 			String[] partes = linea.split(";");
 			String ID = partes[0].trim();
 			String contraseña = partes[1].trim();
@@ -121,18 +139,22 @@ public class Main {
 			contraseñas[cantUsuarios] = partes[1];
 			cantUsuarios++;
 		}
-		
 	}
 	public static void leerRegistros() throws FileNotFoundException{
 		File arch = new File("datos/Registros.txt");
-		sc = new Scanner(arch);
-		while (sc.hasNextLine()) {
-			String linea = sc.nextLine();
+		lector = new Scanner(arch);
+		while (lector.hasNextLine()) {
+			String linea = lector.nextLine();
+			if (linea.trim().isEmpty()) {
+	            continue; // Salta las lineas vacias
+	        }
 			String[] partes = linea.split(";");
+			if (partes.length < 4) {
+	            continue;
+	        }
 			String ID = partes[0].trim();
 			String fecha = partes[1].trim();
 			int horas = Integer.parseInt(partes[2]);
-			sc.nextLine();
 			String actividad = partes[3].trim();
 		}
 	}

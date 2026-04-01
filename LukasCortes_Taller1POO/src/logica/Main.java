@@ -15,7 +15,7 @@ public class Main {
 	static String[] contraseñas = new String[10];
 	static int cantUsuarios = 0;
 	static String usuarioActivo = "";
-	
+	static String[] tipoActividad = new String[10];
 	public static void main(String[] args) throws IOException {
 		leerRegistros(); //Lectura del archivo Registros.txt
 		leerUsuarios();	//Lectura del archivo Usuarios.txt
@@ -87,7 +87,7 @@ public class Main {
 					opcion = Integer.parseInt(sc.nextLine());
 					switch(opcion) {
 					case 1:
-						actividadMasRealizadaUsuario();
+						actividadMasRealizada();
 						break;
 					case 2:
 						actividadMasRealizadaUsuario();
@@ -115,8 +115,65 @@ public class Main {
 			}
 		}while (opcion != 3);
 	}
+	private static void actividadMasRealizada() {
+		try {
+			String[] actividadesUnicas = new String[300];
+			int[] frecuencias = new int[300];
+			int totalUnicas = 0; //Cuantas actividades unicas hay
+			File arch = new File("datos/Registros.txt");
+			lector = new Scanner(arch);
+			while(lector.hasNextLine()) {
+				String linea = lector.nextLine();
+				if (linea.trim().isEmpty()) {
+		            continue; // Salta las lineas vacias
+		        }
+				String[] partes = linea.split(";");
+				if (partes.length < 4) continue; //Por si hay lineas con un formato erroneo
+				String actividad = partes[3].trim().toLowerCase();
+				//Buscamos si esta actividad ya la habiamos guardado en nuestra lista
+				boolean encontrada = false;
+				for (int i = 0; i < totalUnicas; i++) {
+					if (actividadesUnicas[i].equals(actividad)) {
+						frecuencias[i]++; //Si ya existe, le sumamos 1 al contador
+						encontrada = true;
+						break; //Salimos del for porque ya la encontramos
+					}				
+				}
+				//Si terminó el ciclo for y no la encontró, es una actividad NUEVA
+				if (!encontrada) {
+					actividadesUnicas[totalUnicas] = actividad; //La guardamos
+					frecuencias[totalUnicas] = 1; //Es la primera vez que aparece
+					totalUnicas++;
+				}
+			}
+			lector.close();
+			//Si el archivo estaba vacio o no habia registros, avisamos y salimos
+			if (totalUnicas == 0) {
+				System.out.println("No hay actividades registradas aun.");
+				return;
+			}
+			//Ahora buscamos cual es el numero mas alto en la lista
+			int maxFrecuencia = 0;
+			String actividadTop = "";
+			
+			for (int i = 0; i < totalUnicas; i++) {
+				if (frecuencias[i] > maxFrecuencia) {
+					maxFrecuencia = frecuencias[i];
+					actividadTop = actividadesUnicas[i];
+				}
+			}
+			//Imprimimos el resultado 
+			System.out.println("\n=== RESULTADO GLOBAL ===");
+			System.out.println("La actividad mas realizada es: " + maxFrecuencia + " veces.");
+			System.out.println("========================");
+		} catch (FileNotFoundException e) {
+			System.out.println("Error: No se encontró el archivo Registros.txt en la carpeta datos/.");
+		} catch (Exception e) {
+			System.out.println("Ocurrio un error inesperado al calcular la actividad mas realizada.");
+		}
+	}
 	private static void actividadMasRealizadaUsuario() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	private static void usuarioConMayorProcastinacion() {

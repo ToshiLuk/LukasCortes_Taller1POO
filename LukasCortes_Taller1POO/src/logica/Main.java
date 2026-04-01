@@ -164,7 +164,8 @@ public class Main {
 			}
 			//Imprimimos el resultado 
 			System.out.println("\n=== RESULTADO GLOBAL ===");
-			System.out.println("La actividad mas realizada es: " + maxFrecuencia + " veces.");
+			System.out.println("La actividad mas realizada es: " + actividadTop + " veces.");
+			System.out.println("Se repite un total de: " + maxFrecuencia + " veces.");
 			System.out.println("========================");
 		} catch (FileNotFoundException e) {
 			System.out.println("Error: No se encontró el archivo Registros.txt en la carpeta datos/.");

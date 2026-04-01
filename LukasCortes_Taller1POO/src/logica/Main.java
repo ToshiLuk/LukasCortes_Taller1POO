@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 public class Main {
 	public static Scanner sc; //Para Inputs
@@ -103,30 +104,85 @@ public class Main {
 		bw.close();
 	}
 	private static void modificarActividad() throws FileNotFoundException {
-		 File arch = new File("datos/Registros.txt");
-		    lector = new Scanner(arch);
-		    int indice = 1;
-		    while (lector.hasNextLine()) {
-		        String linea = lector.nextLine();
-		        // Evitar líneas vacías
-		        if (linea.trim().isEmpty()) {
-		            continue;
+		 try {
+			//Cargar todo el archivo en un arreglo (máximo 300 actividades)
+		        String[] lineasArchivo = new String[300];
+		        int totalLineas = 0;
+		        File arch = new File("datos/Registros.txt");
+		        lector = new Scanner(arch);
+		        while (lector.hasNextLine() && totalLineas < 300) {
+		            lineasArchivo[totalLineas] = lector.nextLine();
+		            totalLineas++;
 		        }
-		        String[] partes = linea.split(";");
-		        if (partes.length < 4) {
-		            continue;
+		        lector.close(); 
+		        //Mostrar solo las actividades del usuario activo
+		        System.out.println("\n~~~ Actividades de " + usuarioActivo + " ~~~");
+		        boolean tieneActividades = false;
+		        for (int i = 0; i < totalLineas; i++) {
+		            if (lineasArchivo[i].trim().isEmpty()) continue;
+		            
+		            String[] partes = lineasArchivo[i].split(";");
+		            if (partes.length >= 4 && partes[0].trim().equals(usuarioActivo)) {
+		                //Imprimimos 'i' que es el índice real dentro de nuestro arreglo
+		                System.out.println(i + ") " + lineasArchivo[i]);
+		                tieneActividades = true;
+		            }
 		        }
-		        String usuario = partes[0].trim();
-		        // Filtro
-		        if (usuario.equals(usuarioActivo)) {
-		            System.out.println(indice + ") " + linea);
+		        if (!tieneActividades) {
+		            System.out.println("No tienes actividades registradas.");
+		            return; //Salimos del método si no hay nada que modificar
 		        }
-		        indice++;
+		        //Pedir el índice a modificar
+		        System.out.print("\nSeleccione la actividad a modificar, ingrese su indice (o un numero negativo para cancelar): ");
+		        int indiceElegido = Integer.parseInt(sc.nextLine()); // Leemos como String y convertimos a int para evitar tener que saltar linea manualmente
+		        if (indiceElegido < 0) {
+		            return; //El usuario decidió cancelar
+		        }
+		        //Validar que el índice exista y pertenezca realmente al usuario activo
+		        if (indiceElegido >= 0 && indiceElegido < totalLineas && lineasArchivo[indiceElegido].startsWith(usuarioActivo)) {
+		            System.out.println("\nQue deseas modificar?");
+		            System.out.println("1) Fecha");
+		            System.out.println("2) Duracion");
+		            System.out.println("3) Tipo de actividad");
+		            System.out.print("Opcion: ");
+		            int opcionMod = Integer.parseInt(sc.nextLine());
+		            // Separar la línea específica que eligió el usuario
+		            String[] partes = lineasArchivo[indiceElegido].split(";");
+		            if (opcionMod == 1) {
+		                System.out.print("Ingrese nueva fecha: ");
+		                partes[1] = sc.nextLine();
+		            } else if (opcionMod == 2) {
+		                System.out.print("Ingrese nueva duracion (horas): ");
+		                partes[2] = sc.nextLine();
+		            } else if (opcionMod == 3) {
+		                System.out.print("Ingrese nuevo tipo de actividad: ");
+		                partes[3] = sc.nextLine();
+		            } else {
+		                System.out.println("Opcion no valida.");
+		                return;
+		            }
+		            // Reconstruimos la línea con los datos nuevos
+		            lineasArchivo[indiceElegido] = partes[0] + ";" + partes[1] + ";" + partes[2] + ";" + partes[3];
+		            //Sobreescribir el archivo completo para aplicar la persistencia
+		            PrintWriter escritor = new PrintWriter(arch);
+		            for (int i = 0; i < totalLineas; i++) {
+		                escritor.println(lineasArchivo[i]); // Escribimos línea por línea de vuelta al txt
+		            }
+		            escritor.close(); // Cerramos el escritor para que se guarden los cambios
+		            
+		            System.out.println("Actividad modificada con exito!");
+		            
+		        } else {
+		            System.out.println("Error: El indice ingresado no es valido o no te pertenece.");
+		        }
+		        
+		    } catch (FileNotFoundException e) {
+		        System.out.println("Error: No se encontró el archivo Registros.txt en la carpeta datos/.");
+		    } catch (NumberFormatException e) {
+		        System.out.println("Error: Por favor ingresa un numero valido. Operacion cancelada.");
+		    } catch (Exception e) {
+		        System.out.println("Ocurrio un error inesperado al modificar la actividad.");
 		    }
-		    System.out.println("~~~ Que desea modificar " + usuarioActivo + " ~~~");
-		    System.out.print("\n Seleccione la actividad a modificar, ingrese su indice: ");
-		    String indiceInput = sc.nextLine();
-		    
 	}
 	private static void eliminarActividad() {
 		// TODO Auto-generated method stub
@@ -158,8 +214,6 @@ public class Main {
 		while (lector.hasNextLine()) {
 			String linea = lector.nextLine();
 			String[] partes = linea.split(";");
-			String ID = partes[0].trim();
-			String contraseña = partes[1].trim();
 			usuarios[cantUsuarios] = partes[0];
 			contraseñas[cantUsuarios] = partes[1];
 			cantUsuarios++;

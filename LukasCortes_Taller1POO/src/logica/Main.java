@@ -76,7 +76,35 @@ public class Main {
 			
 				break;
 			case 2:
-				menuAnalisis();
+				do {
+					System.out.println("Bienvenido al menú de analisis!");
+					System.out.println("\nQue deseas realizar?");
+					System.out.println("\n1) Actividad más realizada.");
+					System.out.println("2) Actividad más realizada por cada usuario.");
+					System.out.println("3) Usuario con mayor procastinacion.");
+					System.out.println("4) Ver todas las actividades.");
+					System.out.println("5) Salir.");
+					opcion = Integer.parseInt(sc.nextLine());
+					switch(opcion) {
+					case 1:
+						actividadMasRealizadaUsuario();
+						break;
+					case 2:
+						actividadMasRealizadaUsuario();
+						break;
+					case 3:
+						usuarioConMayorProcastinacion();
+						break;
+					case 4:
+						verTodasLasActividades();
+						break;
+					case 5:
+						break;
+					default:
+						System.out.println("Ingresó una opcion no valida.");
+						break;	
+					}
+				}while(opcion != 5);
 				break;
 			case 3:
 				System.out.println("Cerró el programa con exito...");
@@ -86,6 +114,18 @@ public class Main {
 				break;
 			}
 		}while (opcion != 3);
+	}
+	private static void actividadMasRealizadaUsuario() {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void usuarioConMayorProcastinacion() {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void verTodasLasActividades() {
+		// TODO Auto-generated method stub
+		
 	}
 	private static void registrarActividad() throws IOException {
 		System.out.println("~~~ Registro de actividad de " + usuarioActivo + " ~~~");
@@ -287,10 +327,6 @@ public class Main {
 			}
 		}return false; //Si no encuentra el usuario en nuestra lista de usuarios retorna false
 	}
-	public static void menuAnalisis() {
-		// TODO Auto-generated method stub
-		
-	}
 	public static void leerUsuarios() throws FileNotFoundException {
 		File arch = new File("datos/Usuarios.txt");
 		lector = new Scanner(arch);
@@ -301,7 +337,6 @@ public class Main {
 			contraseñas[cantUsuarios] = partes[1];
 			cantUsuarios++;
 		}
-		
 	}
 	public static void leerRegistros() throws FileNotFoundException{
 		File arch = new File("datos/Registros.txt");

@@ -44,8 +44,7 @@ public class Main {
 						System.out.println("3) Eliminar actividad.");
 						System.out.println("4) Cambiar contraseña.");
 						System.out.println("5) Salir.");
-						opcion = sc.nextInt();
-						sc.nextLine();
+						opcion = Integer.parseInt(sc.nextLine());
 						switch (opcion) {
 						case 1:
 							registrarActividad();
@@ -251,10 +250,31 @@ public class Main {
 		        System.out.println("Ocurrio un error inesperado al modificar la actividad.");
 		    }
 	}
-	private static void cambiarContraseña() {
-		
-		
-	}
+	private static void cambiarContraseña() throws FileNotFoundException{
+		try {
+		System.out.println("~~~ Cambiando contraseña del usuario " + usuarioActivo + " ~~~");
+		System.out.print("\nIngrese su nueva contraseña: ");
+		String contraseñaNueva = sc.nextLine();
+		for(int i = 0; i < cantUsuarios; i++) {//Buscamos en la lista usuarios[] hasta encontrar al usuario activo y usamos el indice para cambiar la contraseña
+			if (usuarios[i].equals(usuarioActivo)) {
+				contraseñas[i] = contraseñaNueva;
+			}
+		}//Ahora a sobrescribir Usuarios.txt
+		File arch = new File("datos/Usuarios.txt");
+		PrintWriter escritor = new PrintWriter(arch);
+		//Recorremos a los usuarios registrados
+		for (int i = 0; i < cantUsuarios; i++) {
+			//Se guarda con el formato ID;Contraseña
+			escritor.println(usuarios[i] + ";" + contraseñas[i]);
+		}
+		escritor.close();
+		System.out.println("\n¡Contraseña actualizada con exito!");	
+    }catch (FileNotFoundException e) {
+    	System.out.println("Error: No se encontró el archivo Usuarios.txt en la carpeta datos/.");
+    }catch(Exception e) {
+    	System.out.println("Ocurrio un error inesperado al intentar cambiar la contraseña.");
+    }
+}
 	private static boolean inicioSesion(String usuario, String contraseña) {
 		for (int i = 0; i < cantUsuarios; i++) {
 			if (usuario.equals(usuarios[i])) {

@@ -184,12 +184,75 @@ public class Main {
 		        System.out.println("Ocurrio un error inesperado al modificar la actividad.");
 		    }
 	}
+	//Para este metodo se usó bastante codigo de modificarActividad()
 	private static void eliminarActividad() {
-		// TODO Auto-generated method stub
-		
+		try {
+			//Cargar todo el archivo en un arreglo (máximo 300 actividades)
+		        String[] lineasArchivo = new String[300];
+		        int totalLineas = 0;
+		        File arch = new File("datos/Registros.txt");
+		        lector = new Scanner(arch);
+		        while (lector.hasNextLine() && totalLineas < 300) {
+		            lineasArchivo[totalLineas] = lector.nextLine();
+		            totalLineas++;
+		        }
+		        lector.close(); 
+		        //Mostrar solo las actividades del usuario activo
+		        System.out.println("\n~~~ Actividades de " + usuarioActivo + " ~~~");
+		        boolean tieneActividades = false;
+		        for (int i = 0; i < totalLineas; i++) {
+		            if (lineasArchivo[i].trim().isEmpty()) continue;
+		            
+		            String[] partes = lineasArchivo[i].split(";");
+		            if (partes.length >= 4 && partes[0].trim().equals(usuarioActivo)) {
+		                //Imprimimos 'i' que es el índice real dentro de nuestro arreglo
+		                System.out.println(i + ") " + lineasArchivo[i]);
+		                tieneActividades = true;
+		            }
+		        }
+		        if (!tieneActividades) {
+		            System.out.println("No tienes actividades registradas.");
+		            return; //Salimos del método si no hay nada que modificar
+		        }
+		        //Pedir el índice a eliminar
+		        System.out.print("\nSeleccione la actividad a eliminar, ingrese su indice (o un numero negativo para cancelar): ");
+		        int indiceElegido = Integer.parseInt(sc.nextLine()); // Leemos como String y convertimos a int para evitar tener que saltar linea manualmente
+		        if (indiceElegido < 0) {
+		            return; //El usuario decidió cancelar
+		        }
+		        //Validar que el índice exista y pertenezca realmente al usuario activo
+		        if (indiceElegido >= 0 && indiceElegido < totalLineas && lineasArchivo[indiceElegido].startsWith(usuarioActivo)) {
+		        	//Se desplaza a todos los elementos hacia la izquierda
+		        	//Empezamos del indice que se borrara y se copia el siguiente en su posicion
+		            for (int i = indiceElegido; i < totalLineas - 1; i++) {
+		            	lineasArchivo[i] = lineasArchivo[i+1];
+		            }
+		            //Se limpia el ultimo  espacio que quedó duplicado
+		        lineasArchivo[totalLineas - 1] = null;
+		        totalLineas--; //Se achica el contador total de lineas de Registros.txt
+		        //Ahora se sobrescribe el archivo para que persistan los datos
+		        PrintWriter escritor = new PrintWriter(arch);
+		        for (int i= 0; i< totalLineas; i++) {
+		        	//Chequeo para no escribir lineas null o vacias
+		        	if (lineasArchivo[i] != null && !lineasArchivo[i].trim().isEmpty()) {
+		        		escritor.println(lineasArchivo[i]);
+		        	}
+		        }
+		        escritor.close();
+		        System.out.println("\nActividad eliminada con exito!");
+		        }else {
+		        	System.out.println("\nError: El indice ingresado no es valido o no te pertenece.");
+		        }
+		    } catch (FileNotFoundException e) {
+		        System.out.println("Error: No se encontró el archivo Registros.txt en la carpeta datos/.");
+		    } catch (NumberFormatException e) {
+		        System.out.println("Error: Por favor ingresa un numero valido. Operacion cancelada.");
+		    } catch (Exception e) {
+		        System.out.println("Ocurrio un error inesperado al modificar la actividad.");
+		    }
 	}
 	private static void cambiarContraseña() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	private static boolean inicioSesion(String usuario, String contraseña) {

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Main {
 	public static Scanner sc; //Para Inputs
@@ -26,8 +27,23 @@ public class Main {
 			System.out.println("1) Menu de Usuarios");
 			System.out.println("2) Menu de Analisis");
 			System.out.println("3) Salir");
-			opcion = sc.nextInt();
-			sc.nextLine(); //Para saltar la linea y que no hayan errores luego al seguir usando sc
+			do {
+				try {
+				opcion = Integer.parseInt(sc.nextLine());	
+				}catch(InputMismatchException e) {
+					System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+					System.out.println("\n1) Menu de Usuarios");
+					System.out.println("2) Menu de Analisis");
+					System.out.println("3) Salir");
+					sc.next();
+				}catch(NumberFormatException e) {
+					System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+					System.out.println("\n1) Menu de Usuarios");
+					System.out.println("2) Menu de Analisis");
+					System.out.println("3) Salir");
+					sc.next();
+				}
+			}while(opcion!= 0 || opcion!= 1 || opcion != 2|| opcion != 3);
 			switch (opcion) {
 			case 1:
 				//Ingreso de usuario y contraseña

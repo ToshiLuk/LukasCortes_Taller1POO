@@ -31,19 +31,19 @@ public class Main {
 				try {
 				opcion = Integer.parseInt(sc.nextLine());	
 				}catch(InputMismatchException e) {
-					System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+					System.out.println("Ingresó un valor no valido para el menú, intentelo de nuevo.");
 					System.out.println("\n1) Menu de Usuarios");
 					System.out.println("2) Menu de Analisis");
 					System.out.println("3) Salir");
 					sc.next();
 				}catch(NumberFormatException e) {
-					System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+					System.out.println("Ingresó un valor no valido para el menú, intentelo de nuevo.");
 					System.out.println("\n1) Menu de Usuarios");
 					System.out.println("2) Menu de Analisis");
 					System.out.println("3) Salir");
 					sc.next();
 				}
-			}while(opcion!= 0 || opcion!= 1 || opcion != 2|| opcion != 3);
+			}while(opcion!= 0 && opcion!= 1 && opcion != 2);
 			switch (opcion) {
 			case 1:
 				//Ingreso de usuario y contraseña
@@ -82,7 +82,7 @@ public class Main {
 								System.out.println("5) Salir.");
 								sc.next();
 							}
-						}while(opcion!= 0 || opcion!= 1 || opcion != 2|| opcion != 3 || opcion != 4 || opcion != 5);
+						}while(opcion!= 0 && opcion!= 1 && opcion != 2 && opcion != 3 && opcion != 4);
 						switch (opcion) {
 						case 1:
 							registrarActividad();
@@ -146,7 +146,7 @@ public class Main {
 							System.out.println("5) Salir.");
 							sc.next();
 						}
-					}while(opcion!= 0 || opcion!= 1 || opcion != 2|| opcion != 3 || opcion != 4 || opcion != 5);
+					}while(opcion!= 0 && opcion!= 1 && opcion != 2 && opcion != 3 && opcion != 4);
 					switch(opcion) {
 					case 1:
 						actividadMasRealizada();

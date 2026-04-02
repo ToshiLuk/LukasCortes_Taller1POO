@@ -60,7 +60,29 @@ public class Main {
 						System.out.println("3) Eliminar actividad.");
 						System.out.println("4) Cambiar contraseña.");
 						System.out.println("5) Salir.");
-						opcion = Integer.parseInt(sc.nextLine());
+						do {
+							try {
+							opcion = Integer.parseInt(sc.nextLine());	
+							}catch(InputMismatchException e) {
+								System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+								System.out.println("\nBienvenido " + usuarioActivo + "! \n\nQue deseas realizar?");
+								System.out.println("\n1) Registrar actividad.");
+								System.out.println("2) Modificar actividad.");
+								System.out.println("3) Eliminar actividad.");
+								System.out.println("4) Cambiar contraseña.");
+								System.out.println("5) Salir.");
+								sc.next();
+							}catch(NumberFormatException e) {
+								System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+								System.out.println("\nBienvenido " + usuarioActivo + "! \n\nQue deseas realizar?");
+								System.out.println("\n1) Registrar actividad.");
+								System.out.println("2) Modificar actividad.");
+								System.out.println("3) Eliminar actividad.");
+								System.out.println("4) Cambiar contraseña.");
+								System.out.println("5) Salir.");
+								sc.next();
+							}
+						}while(opcion!= 0 || opcion!= 1 || opcion != 2|| opcion != 3 || opcion != 4 || opcion != 5);
 						switch (opcion) {
 						case 1:
 							registrarActividad();
@@ -100,7 +122,31 @@ public class Main {
 					System.out.println("3) Usuario con mayor procastinacion.");
 					System.out.println("4) Ver todas las actividades.");
 					System.out.println("5) Salir.");
-					opcion = Integer.parseInt(sc.nextLine());
+					do {
+						try {
+						opcion = Integer.parseInt(sc.nextLine());	
+						}catch(InputMismatchException e) {
+							System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+							System.out.println("Bienvenido al menú de analisis!");
+							System.out.println("\nQue deseas realizar?");
+							System.out.println("\n1) Actividad más realizada.");
+							System.out.println("2) Actividad más realizada por cada usuario.");
+							System.out.println("3) Usuario con mayor procastinacion.");
+							System.out.println("4) Ver todas las actividades.");
+							System.out.println("5) Salir.");
+							sc.next();
+						}catch(NumberFormatException e) {
+							System.out.println("Ingresó un valido no valido para el menú, intentelo de nuevo.");
+							System.out.println("Bienvenido al menú de analisis!");
+							System.out.println("\nQue deseas realizar?");
+							System.out.println("\n1) Actividad más realizada.");
+							System.out.println("2) Actividad más realizada por cada usuario.");
+							System.out.println("3) Usuario con mayor procastinacion.");
+							System.out.println("4) Ver todas las actividades.");
+							System.out.println("5) Salir.");
+							sc.next();
+						}
+					}while(opcion!= 0 || opcion!= 1 || opcion != 2|| opcion != 3 || opcion != 4 || opcion != 5);
 					switch(opcion) {
 					case 1:
 						actividadMasRealizada();

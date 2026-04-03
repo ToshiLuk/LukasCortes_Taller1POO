@@ -226,7 +226,7 @@ public class Main {
 			}
 			//Imprimimos el resultado 
 			System.out.println("\n=== RESULTADO GLOBAL ===");
-			System.out.println("La actividad mas realizada es: " + actividadTop + " veces.");
+			System.out.println("La actividad mas realizada es: " + actividadTop + ".");
 			System.out.println("Se repite un total de: " + maxFrecuencia + " veces.");
 			System.out.println("========================");
 		} catch (FileNotFoundException e) {
@@ -248,7 +248,7 @@ public class Main {
 		
 	}
 	private static void registrarActividad() throws IOException {
-		System.out.println("~~~ Registro de actividad de " + usuarioActivo + " ~~~");
+		System.out.println("=== Registro de actividad de " + usuarioActivo + " ===");
 		System.out.print("Ingrese la fecha de la actividad: ");
 		String fecha = sc.nextLine();
 		System.out.print("Ingrese las horas de la actividad: ");
@@ -258,6 +258,8 @@ public class Main {
 		String actividad = sc.nextLine();
 		String actividadNueva = usuarioActivo + ";" + fecha + ";" + horas + ";" + actividad;
 		BufferedWriter bw = new BufferedWriter(new FileWriter("datos/Registros.txt", true));
+		System.out.println("Se registró la actividad: "+actividadNueva+ " con exito.");
+		System.out.println("========================");
 		bw.newLine();
 		bw.write(actividadNueva);
 		bw.close();
@@ -275,7 +277,7 @@ public class Main {
 		        }
 		        lector.close(); 
 		        //Mostrar solo las actividades del usuario activo
-		        System.out.println("\n~~~ Actividades de " + usuarioActivo + " ~~~");
+		        System.out.println("\n=== Actividades de " + usuarioActivo + " ===");
 		        boolean tieneActividades = false;
 		        for (int i = 0; i < totalLineas; i++) {
 		            if (lineasArchivo[i].trim().isEmpty()) continue;
@@ -330,7 +332,7 @@ public class Main {
 		            escritor.close(); // Cerramos el escritor para que se guarden los cambios
 		            
 		            System.out.println("Actividad modificada con exito!");
-		            
+		            System.out.println("========================");
 		        } else {
 		            System.out.println("Error: El indice ingresado no es valido o no te pertenece.");
 		        }
@@ -412,7 +414,7 @@ public class Main {
 	}
 	private static void cambiarContraseña() throws FileNotFoundException{
 		try {
-		System.out.println("~~~ Cambiando contraseña del usuario " + usuarioActivo + " ~~~");
+		System.out.println("=== Cambiando contraseña del usuario " + usuarioActivo + " ===");
 		System.out.print("\nIngrese su nueva contraseña: ");
 		String contraseñaNueva = sc.nextLine();
 		for(int i = 0; i < cantUsuarios; i++) {//Buscamos en la lista usuarios[] hasta encontrar al usuario activo y usamos el indice para cambiar la contraseña
@@ -429,6 +431,7 @@ public class Main {
 		}
 		escritor.close();
 		System.out.println("\n¡Contraseña actualizada con exito!");	
+		System.out.println("========================");
     }catch (FileNotFoundException e) {
     	System.out.println("Error: No se encontró el archivo Usuarios.txt en la carpeta datos/.");
     }catch(Exception e) {

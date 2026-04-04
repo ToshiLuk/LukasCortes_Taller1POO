@@ -15,13 +15,16 @@ Un Menú de Análisis de acceso libre, que calcula estadísticas generales para 
 
 ## Estructura del proyecto
 
+```text
 📂 LukasCortes_Taller1POO/
 ├── 📂 datos/
-│   ├── Usuarios.txt          # Archivo de texto con las credenciales de acceso (Formato: ID;Contraseña)
-│   └── Registros.txt         # Archivo de texto con el historial de actividades (Formato: ID;Fecha;Horas;Actividad)
+│   ├── Usuarios.txt          # Archivo con credenciales de acceso (Formato: ID;Contraseña)
+│   └── Registros.txt         # Archivo con historial de actividades (Formato: ID;Fecha;Horas;Actividad)
 │
 ├── 📂 src/
 │   └── 📂 logica/
-│       └── Main.java         # Archivo principal que concentra la lectura de archivos, los arreglos, y la navegación de menús interactivos
+│       └── Main.java         # Archivo principal con lectura de archivos y navegación de menús
 │
 └── README.md                 # Documentación y manual de ejecución del proyecto
+```
+`

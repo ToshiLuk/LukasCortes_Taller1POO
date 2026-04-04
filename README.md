@@ -1,6 +1,6 @@
 ## Descripción del proyecto
 
-Este es el repositorio correspondiente a la entrega de mi/nuestro Taller 01 para la asignatura de ITI - ICCI (I Semestre - 2026).
+Este es el repositorio correspondiente a la entrega de mi Taller 01 para la asignatura de ITI - ICCI (I Semestre - 2026).
 El proyecto consiste en un programa de consola hecho en Java que sirve para llevar un registro del tiempo que perdemos (o "procrastinamos") en actividades de ocio. Según la historia del taller, a un grupo de amigos (Martín, Catalina y Estefanía) se les arruinó la app que usaban para esto, así que tuvimos que programarles un software nuevo que lea los registros antiguos que se salvaron y permita gestionar datos nuevos.
 
 El sistema lo dividimos en dos partes principales:
